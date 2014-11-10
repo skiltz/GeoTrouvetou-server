@@ -9,7 +9,6 @@ var ip = process.env.IP || 'localhost';
 express = require("express");
 
 
-
 /*
  Configuration
  */
@@ -21,17 +20,17 @@ app.use(express.logger("dev"));
 
 app.use(express.bodyParser());
 
-app.use(express["static"](__dirname + "/public"));
+app.use(express["static"](__dirname + '/../app/' + '/compiled'));
 
 app.use(express.errorHandler({
   dumpExceptions: true,
   showStack: true
 }));
 
-app.get('/', function(req, res) {
-  return res.sendfile('./public/index.html');
+app.get('/', function (req, res) {
+  return res.sendfile(__dirname + '/../app/' + '/compiled/index.html');
 });
 
-app.listen(port,ip, function() {
-  return console.log("port: "+port);
+app.listen(port, ip, function () {
+  return console.log("port: " + port);
 });
