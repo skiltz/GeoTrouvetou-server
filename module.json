@@ -1,0 +1,8 @@
+{
+  "name": "GeoTrouvetou-server",
+  "version": "0.0.7",
+  "private": "true",
+  "dependencies": {
+    "GeoTrouvetou-nodejs": "0.10.29"
+  }
+}
