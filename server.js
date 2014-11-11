@@ -8,11 +8,12 @@ var port = process.env.PORT || 8080;
 var ip = process.env.IP || 'localhost';
 express = require("express");
 
-
 /*
  Configuration
  */
 
+var home_dir = __dirname + '/../';
+var modules = require(home_dir + 'modules.json');
 
 app = express();
 
@@ -26,6 +27,21 @@ app.use(express.errorHandler({
   dumpExceptions: true,
   showStack: true
 }));
+
+app.get('/modules', function (req, res) {
+  return res.send(modules);
+});
+
+app.get('/home_dir', function (req, res) {
+  return home_dir;
+});
+
+app.get('/module/:module', function (req, res) {
+  console.log(home_dir + modules[req.params.module].path + '/module.json');
+  var module = require(home_dir + modules[req.params.module].path +
+    '/module.json');
+  return res.send(module);
+});
 
 app.get('/', function (req, res) {
   return res.sendfile(__dirname + '/../app/' + '/compiled/index.html');
