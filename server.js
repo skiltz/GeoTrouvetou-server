@@ -20,9 +20,11 @@ app = express();
 app.use(express.logger("dev"));
 
 app.use(express.bodyParser());
-
-app.use(express["static"](__dirname + '/../app/' + '/compiled'));
-
+if (process.argv.indexOf('--devel') || process.argv.indexOf('-D')) {
+  app.use(express["static"](__dirname + '/../app/' + '/build'));
+} else {
+  app.use(express["static"](__dirname + '/../app/' + '/compiled'));
+}
 app.use(express.errorHandler({
   dumpExceptions: true,
   showStack: true
