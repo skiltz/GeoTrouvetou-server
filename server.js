@@ -46,7 +46,12 @@ app.get('/module/:module', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-  return res.sendfile(__dirname + '/../app/' + '/compiled/index.html');
+  if (process.argv.indexOf('--devel') || process.argv.indexOf('-D')) {
+    return res.sendfile(__dirname + '/../app/' + '/build/index.html');
+  }
+  else{
+    return res.sendfile(__dirname + '/../app/' + '/compiled/index.html');
+  }
 });
 
 app.listen(port, ip, function () {
