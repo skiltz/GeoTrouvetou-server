@@ -4,6 +4,7 @@
  Requires
  */
 var app, client, express;
+var path = require('path');
 var port = process.env.PORT || 8080;
 var ip = process.env.IP || 'localhost';
 express = require("express");
@@ -13,7 +14,7 @@ express = require("express");
  */
 
 var home_dir = __dirname + '/../';
-var modules = require(home_dir + 'modules.json');
+var modules = require(path.resolve(home_dir, 'modules.json'));
 
 app = express();
 
@@ -21,7 +22,7 @@ app.use(express.logger("dev"));
 
 app.use(express.bodyParser());
 
-app.use(express["static"](__dirname + '/../app/' + '/compiled'));
+app.use(express.static(path.resolve(home_dir, 'app', 'compiled')));
 
 app.use(express.errorHandler({
   dumpExceptions: true,
@@ -44,7 +45,7 @@ app.get('/module/:module', function (req, res) {
 });
 
 app.get('/', function (req, res) {
-  return res.sendfile(__dirname + '/../app/' + '/compiled/index.html');
+  return res.sendfile(path.resolve(home_dir, 'app', 'compiled', 'index.html'));
 });
 
 app.listen(port, ip, function () {
